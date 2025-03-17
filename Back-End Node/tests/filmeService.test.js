@@ -57,7 +57,7 @@ describe("FilmeService", () => {
     expect(Filme.getById).toHaveBeenCalledWith(1);
   });
 
-  // Teste criar sem id_categora e nome 
+  // Teste criar sem id_categora e nome
   test("Deve falhar ao tentar criar um filme sem categoria_id ou sem nome", async () => {
     const filmeDataInvalido1 = { nome: "Vingadores", imagem_url: "url_imagem" }; // Sem categoria_id
     const filmeDataInvalido2 = { categoria_id: 1, imagem_url: "url_imagem" }; // Sem nome
@@ -93,6 +93,7 @@ describe("FilmeService", () => {
     const updateData = {
       categoria_id: 2,
       nome: "Homem de Ferro",
+      observacao: "Filme sobre o herói da Marvel",
       imagem_url: "nova_url",
     };
     const mockFilme = { id, ...updateData };
