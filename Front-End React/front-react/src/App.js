@@ -5,3 +5,6 @@ function App() {
 }
 
 export default App;
+
+// Para rodar:
+// npm start

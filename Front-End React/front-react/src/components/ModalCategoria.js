@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CategoriaService from "../services/CategoriaService"; 
+import { CategoriaService } from "../services/CategoriaService";
 
 function Modal({ isOpen, onClose }) {
   const [categoriaNome, setCategoriaNome] = useState(""); 
@@ -72,11 +72,9 @@ function Modal({ isOpen, onClose }) {
       alert("Por favor, insira um nome para a categoria.");
       return;
     }
-
     const response = await CategoriaService.create(categoriaNome);
-    alert(response.message);
-
-    if (response.success) {
+    
+    if (response) {
       setCategoriaNome(""); 
       onClose(); // Fecha o modal
     }
@@ -92,8 +90,6 @@ function Modal({ isOpen, onClose }) {
         value={categoriaNome}
         onChange={(e) => setCategoriaNome(e.target.value)}
         style={styles.input} />
-
-        console.log(categoriaNome)
 
         <div style={styles.buttonContainer}>
           <button style={styles.button} onClick={handleSave}>Salvar</button>
