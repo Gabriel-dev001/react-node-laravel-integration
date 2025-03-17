@@ -1,8 +1,10 @@
+const cors = require("cors");
 const express = require("express");
 const categoriaRoutes = require("./src/routes/categoriaRoutes");
 const filmeRoutes = require("./src/routes/filmeRoutes");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Cadastrar as rotas da API
