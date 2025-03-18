@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { CategoriaService } from "../services/CategoriaService";
 
-function Modal({ isOpen, onClose }) {
+function Modal({ isOpen, onClose, atualizarCategorias }) {
   const [categoriaNome, setCategoriaNome] = useState(""); 
   
-  if (!isOpen) return null; // Se não estiver aberto, não renderiza nada
+  if (!isOpen) return null; 
 
   const styles = {
     overlay: {
@@ -76,7 +76,8 @@ function Modal({ isOpen, onClose }) {
     
     if (response) {
       setCategoriaNome(""); 
-      onClose(); // Fecha o modal
+      onClose();
+      atualizarCategorias();
     }
   };
 

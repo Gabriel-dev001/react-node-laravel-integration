@@ -10,4 +10,14 @@ export const CategoriaService = {
       throw new Error(error.response?.data?.message || "Erro ao cadastrar categoria");
     }
   },
+
+  getAll: async () => {
+    try {
+      const response = await axios.get(API_ROUTES.CATEGORIA);
+      return response.data; // Retorna a lista de categorias
+    } catch (error) {
+      console.error("Erro ao buscar categorias:", error);
+      return [];
+    }
+  },
 };
