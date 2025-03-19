@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Cadastrar as rotas da API
+
 app.use("/categoria", categoriaRoutes);
 app.use("/filme", filmeRoutes);
 
