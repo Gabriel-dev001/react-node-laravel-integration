@@ -7,7 +7,7 @@ async function testarConexao() {
     } catch (error) {
         console.error("Erro ao conectar:", error);
     } finally {
-        process.exit(); // Fecha o processo após o teste
+        process.exit();
     }
 }
 
