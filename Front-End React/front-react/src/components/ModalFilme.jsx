@@ -6,6 +6,7 @@ function ModalFilme({ isOpen, onClose, atualizarFilmes, categoriaId}) {
     const [nome, setNome] = useState("");
     const [observacao, setObservacao] = useState("");
     const [imagemUrl, setImagemUrl] = useState("");
+    // eslint-disable-next-line no-unused-vars
     const [categorias, setCategorias] = useState([]);
 
     useEffect(() => {
@@ -144,6 +145,7 @@ function ModalFilme({ isOpen, onClose, atualizarFilmes, categoriaId}) {
           >
             Fechar
           </button>
+          
         </div>
       </div>
     </div>

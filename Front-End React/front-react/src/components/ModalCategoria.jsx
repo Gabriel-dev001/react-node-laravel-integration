@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { CategoriaService } from "../services/CategoriaService";
 
 function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
-  const [categoriaNome, setCategoriaNome] = useState(""); 
-  
-  if (!isOpen) return null; 
+  const [categoriaNome, setCategoriaNome] = useState("");
+
+  if (!isOpen) return null;
 
   const styles = {
     overlay: {
@@ -41,8 +41,8 @@ function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
     buttonContainer: {
       display: "flex",
       justifyContent: "center",
-      gap: "10px", 
-      width: "100%", 
+      gap: "10px",
+      width: "100%",
       marginTop: "15px",
     },
     button: {
@@ -52,18 +52,18 @@ function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
       border: "none",
       borderRadius: "5px",
       cursor: "pointer",
-      flex: 1, 
+      flex: 1,
       maxWidth: "120px",
     },
     closeButton: {
-        padding: "10px 15px",
-        backgroundColor: "gray",
-        color: "#fff",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-        flex: 1,
-        maxWidth: "120px",
+      padding: "10px 15px",
+      backgroundColor: "gray",
+      color: "#fff",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      flex: 1,
+      maxWidth: "120px",
     },
   };
 
@@ -73,9 +73,9 @@ function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
       return;
     }
     const response = await CategoriaService.create(categoriaNome);
-    
+
     if (response) {
-      setCategoriaNome(""); 
+      setCategoriaNome("");
       onClose();
       atualizarCategorias();
     }
@@ -86,17 +86,25 @@ function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
       <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2>Cadastrar Categoria</h2>
 
-        <input type="text" 
-        placeholder="Nome da Categoria" 
-        value={categoriaNome}
-        onChange={(e) => setCategoriaNome(e.target.value)}
-        style={styles.input} />
+        <input
+          type="text"
+          placeholder="Nome da Categoria"
+          value={categoriaNome}
+          onChange={(e) => setCategoriaNome(e.target.value)}
+          style={styles.input}
+        />
 
         <div style={styles.buttonContainer}>
-          <button style={styles.button} onClick={handleSave}>Salvar</button>
-          <button style={{ ...styles.button, ...styles.closeButton }} onClick={onClose}>Fechar</button>
+          <button style={styles.button} onClick={handleSave}>
+            Salvar
+          </button>
+          <button
+            style={{ ...styles.button, ...styles.closeButton }}
+            onClick={onClose}
+          >
+            Fechar
+          </button>
         </div>
-        
       </div>
     </div>
   );

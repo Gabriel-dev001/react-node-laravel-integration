@@ -1,6 +1,5 @@
 import axios from "axios";
-import { API_ROUTES } from "../routes/ApisRoutes"; // Importamos as rotas
-
+import { API_ROUTES } from "../routes/ApisRoutes";
 export const CategoriaService = {
   async create (categoriaNome){
     try {
