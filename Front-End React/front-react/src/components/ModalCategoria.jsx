@@ -94,7 +94,7 @@ function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
           style={styles.input}
         />
 
-<div style={styles.buttonContainer}>
+        <div style={styles.buttonContainer}>
           <button style={styles.button} onClick={handleSave}>
             Salvar
           </button>
