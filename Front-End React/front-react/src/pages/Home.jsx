@@ -1,13 +1,18 @@
-import React, { useState, useEffect} from "react";
-import Modal from "../components/ModalCategoria";
-import ListFilmes from"../components/ListFilmes"
+import React, { useState, useEffect } from "react";
+import ModalCategoria from "../components/ModalCategoria";
+import ModalFilme from "../components/ModalFilme";
+import ListFilmes from "../components/ListFilmes";
 import { CategoriaService } from "../services/CategoriaService";
+import { FilmeService } from "../services/FilmeService";
 
 function Home() {
+  const [isHoveredCategoria, setIsHoveredCategoria] = useState(false);
+  const [isHoveredFilme, setIsHoveredFilme] = useState(false);
+  const [filmes, setFilmes] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [isHoveredCategoria, setIsHoveredCategoria] = useState(false);
-  const [isHoveredFilme, setIsHoveredFilme] = useState(false); 
+  const [modalFilmeOpen, setModalFilmeOpen] = useState(false);
+  const [selectedCategoriaId, setSelectedCategoriaId] = useState(null);
 
   const atualizarCategorias = async () => {
     try {
@@ -18,8 +23,29 @@ function Home() {
     }
   };
 
+  const atualizarFilmes = async () => {
+    try {
+      const data = await FilmeService.getAll(); 
+      console.log("Filmes carregados:", data); 
+      setFilmes(data); 
+    } catch (error) {
+      console.error("Erro ao buscar filmes:", error);
+    }
+  };
+
+  const DeleteFilme = async (id) => {
+    try {
+      await FilmeService.deleteById(id);
+      atualizarFilmes();
+    } catch (error) {
+      console.error("Erro ao deletar filme:", error);
+    }
+  };
+
   useEffect(() => {
     atualizarCategorias();
+    atualizarFilmes();
+    
   }, []);
 
   const styles = {
@@ -64,7 +90,7 @@ function Home() {
       padding: "10px 20px",
       fontSize: "1rem",
       color: "#FFF",
-      backgroundColor: isHoveredCategoria ? "rgb(255, 0, 0)" : "rgb(193, 0, 0)", // Aplica o hover corretamente
+      backgroundColor: isHoveredCategoria ? "rgb(255, 0, 0)" : "rgb(193, 0, 0)", 
       border: "none",
       borderRadius: "5px",
       cursor: "pointer",
@@ -76,7 +102,7 @@ function Home() {
       padding: "5px 20px",
       fontSize: "1rem",
       color: "#FFF",
-      backgroundColor: isHoveredFilme ? "rgb(255, 0, 0)" : "rgb(193, 0, 0)", // Aplica o hover corretamente
+      backgroundColor: isHoveredFilme ? "rgb(255, 0, 0)" : "rgb(193, 0, 0)",
       border: "none",
       borderRadius: "5px",
       cursor: "pointer",
@@ -90,35 +116,49 @@ function Home() {
     <div style={styles.container}>
       <h1 style={styles.title}>Seja Bem-Vindo</h1>
 
-      <button
-        style={styles.buttonCategoria}
-        onMouseEnter={() => setIsHoveredCategoria(true)}
-        onMouseLeave={() => setIsHoveredCategoria(false)}
-        onClick={() => setModalOpen(true)}
-      >
-       <span style={styles.text}>Adicionar Categoria</span>
+      <button style={styles.buttonCategoria} onClick={() => setModalOpen(true)}>
+        <span style={styles.text}>Adicionar Categoria</span>
       </button>
 
-      <Modal 
-        isOpen={modalOpen} 
-        onClose={() => setModalOpen(false)} 
+      <ModalCategoria
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
         atualizarCategorias={atualizarCategorias}
       />
 
-      {/* Exibição das Categorias e Filmes */}
-      {categorias.map((categoria) => (
-        <ListFilmes key={categoria.id} categoria={categoria}
-        buttonAddFilm={
-          <button
-            style={styles.buttonFilm}
-            onMouseEnter={() => setIsHoveredFilme(true)}
-            onMouseLeave={() => setIsHoveredFilme(false)}
-            onClick={() => console.log(`Adicionar filme`)}>
-            +
-      </button>
-        } />
-      ))}
-      
+      {categorias.map((categoria) => {
+        const filmesFiltrados = filmes.filter(
+          // Aqui eu filtro aonde cada Filme vai
+          (filme) => filme.categoria_id === categoria.id
+        );
+
+        return (
+          <ListFilmes
+            key={categoria.id}
+            categoria={categoria}
+            filmes={filmesFiltrados}
+            buttonAddFilm={
+              <button
+                style={styles.buttonFilm}
+                onClick={() => {
+                  setSelectedCategoriaId(categoria.id);
+                  setModalFilmeOpen(true);
+                }}
+              >
+                +
+              </button>
+            }
+            onDelete={DeleteFilme}
+          />
+        );
+      })}
+
+      <ModalFilme
+        isOpen={modalFilmeOpen}
+        onClose={() => setModalFilmeOpen(false)}
+        atualizarFilmes={atualizarFilmes}
+        categoriaId={selectedCategoriaId}
+      />
     </div>
   );
 }

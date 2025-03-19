@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CategoriaService } from "../services/CategoriaService";
 
-function Modal({ isOpen, onClose, atualizarCategorias }) {
+function ModalCategoria({ isOpen, onClose, atualizarCategorias }) {
   const [categoriaNome, setCategoriaNome] = useState(""); 
   
   if (!isOpen) return null; 
@@ -102,4 +102,4 @@ function Modal({ isOpen, onClose, atualizarCategorias }) {
   );
 }
 
-export default Modal;
+export default ModalCategoria;
