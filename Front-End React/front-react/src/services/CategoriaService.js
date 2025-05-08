@@ -11,6 +11,17 @@ export const CategoriaService = {
     }
   },
 
+  async update(categoria_id, categoriaNome) {
+    try {
+      const response = await axios.put(`${API_ROUTES.CATEGORIA}/${categoria_id}`, {
+        nome: categoriaNome
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || "Erro ao atualizar categoria");
+    }
+  },
+
   async getAll (){
     try {
       const response = await axios.get(API_ROUTES.CATEGORIA);

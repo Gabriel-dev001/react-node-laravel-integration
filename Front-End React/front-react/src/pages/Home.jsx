@@ -23,11 +23,21 @@ function Home() {
     }
   };
 
+  const atualizarCategoria = async (categoriaId, novoNome) => {
+    try {
+      const data = await CategoriaService.update(categoriaId, novoNome);
+      console.log("Categoria atualizada:", data);
+      await atualizarCategorias();
+    } catch (error) {
+      console.error("Erro ao atualizar categoria:", error.message);
+    }
+  };
+
   const atualizarFilmes = async () => {
     try {
-      const data = await FilmeService.getAll(); 
-      console.log("Filmes carregados:", data); 
-      setFilmes(data); 
+      const data = await FilmeService.getAll();
+      console.log("Filmes carregados:", data);
+      setFilmes(data);
     } catch (error) {
       console.error("Erro ao buscar filmes:", error);
     }
@@ -45,7 +55,6 @@ function Home() {
   useEffect(() => {
     atualizarCategorias();
     atualizarFilmes();
-    
   }, []);
 
   const styles = {
@@ -90,7 +99,7 @@ function Home() {
       padding: "10px 20px",
       fontSize: "1rem",
       color: "#FFF",
-      backgroundColor: isHoveredCategoria ? "rgb(255, 0, 0)" : "rgb(193, 0, 0)", 
+      backgroundColor: isHoveredCategoria ? "rgb(255, 0, 0)" : "rgb(193, 0, 0)",
       border: "none",
       borderRadius: "5px",
       cursor: "pointer",
@@ -128,7 +137,6 @@ function Home() {
 
       {categorias.map((categoria) => {
         const filmesFiltrados = filmes.filter(
-          // Aqui eu filtro aonde cada Filme vai
           (filme) => filme.categoria_id === categoria.id
         );
 
@@ -137,6 +145,17 @@ function Home() {
             key={categoria.id}
             categoria={categoria}
             filmes={filmesFiltrados}
+            buttonUpdateFilm={
+              <button
+                style={styles.buttonFilm}
+                onClick={() => {
+                  setSelectedCategoriaId(categoria.id);
+                  setModalFilmeOpen(true);
+                }}
+              >
+                +
+              </button>
+            }
             buttonAddFilm={
               <button
                 style={styles.buttonFilm}
@@ -152,6 +171,13 @@ function Home() {
           />
         );
       })}
+
+      <ModalFilme
+        isOpen={modalFilmeOpen}
+        onClose={() => setModalFilmeOpen(false)}
+        atualizarFilmes={atualizarFilmes}
+        categoriaId={selectedCategoriaId}
+      />
 
       <ModalFilme
         isOpen={modalFilmeOpen}
