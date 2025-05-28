@@ -163,8 +163,8 @@ function Home() {
               <button
                 style={styles.buttonFilm}
                 onClick={() => {
-                  setSelectedCategoriaId(categoria.id); 
-                  setModalEditarCategoriaOpen(true); 
+                  setSelectedCategoriaId(categoria.id);
+                  setModalEditarCategoriaOpen(true);
                 }}
               >
                 Editar
@@ -194,11 +194,11 @@ function Home() {
 
 export default Home;*/
 
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import ListFilmes from "../components/ListFilmes";
 import ModalCategoria from "../components/ModalCategoria";
 import ModalEditarCategoria from "../components/ModalEditarCategoria";
 import ModalFilme from "../components/ModalFilme";
-import ListFilmes from "../components/ListFilmes";
 import { CategoriaService } from "../services/CategoriaService";
 import { FilmeService } from "../services/FilmeService";
 
@@ -358,8 +358,8 @@ function Home() {
               <button
                 style={styles.buttonFilm}
                 onClick={() => {
-                  setSelectedCategoriaId(categoria.id); 
-                  setModalEditarCategoriaOpen(true); 
+                  setSelectedCategoriaId(categoria.id);
+                  setModalEditarCategoriaOpen(true);
                 }}
               >
                 Editar
@@ -388,4 +388,3 @@ function Home() {
 }
 
 export default Home;
-
